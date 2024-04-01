@@ -1,7 +1,7 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
-// import doctorController from "../controllers/doctorController";
+import doctorController from "../controllers/doctorController";
 // import patientController from "../controllers/patientController";
 // import specialtyController from "../controllers/specialtyController";
 // import clinicController from "../controllers/clinicController";
@@ -25,12 +25,12 @@ let initWebRoutes = (app) => {
     router.delete('/api/delete-user',userController.handleDeleteUser);
     router.get('/api/allcodes', userController.getAllCode);
 
-    // router.get('/api/top-doctor-home', doctorController.getTopDoctorHome);
-    // router.get('/api/get-all-doctors', doctorController.getAllDoctors);
-    // router.post('/api/save-info-doctors', doctorController.postInfoDoctor);
-    // router.get('/api/get-all-detail-doctor-by-id', doctorController.getDetailDoctorById);
-    // router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule);
-    // router.get('/api/get-schedule-doctor-by-date', doctorController.getScheduleByDate);
+    router.get('/api/top-doctor-home', doctorController.getTopDoctorHome);
+    router.get('/api/get-all-doctors', doctorController.getAllDoctors);
+    router.post('/api/save-info-doctors', doctorController.postInfoDoctor);
+    router.get('/api/get-all-detail-doctor-by-id', doctorController.getDetailDoctorById);
+    router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule);
+    router.get('/api/get-schedule-doctor-by-date', doctorController.getScheduleByDate);
     // router.get('/api/get-extra-info-doctor-by-id', doctorController.getExtraInfoDoctorById);
     // router.get('/api/get-profile-doctor-by-id', doctorController.getProfileDoctorById);
 
