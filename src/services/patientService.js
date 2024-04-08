@@ -1,10 +1,10 @@
 import db from "../models/index";
 require('dotenv').config();
 import emailService from './emailService';
-//import { v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4} from 'uuid';
 
 let buildUrlEmail = (doctorId, token) =>{
-    let result = `${process.env.REACT_APP_FRONTEND_URL}/verify-booking?token=${token}&doctorId=${doctorId}`;
+    let result = `${process.env.URL_REACT}/verify-booking?token=${token}&doctorId=${doctorId}`;
     return result;
 }
 
@@ -21,14 +21,14 @@ let postBookAppointment = (data) =>{
                 })
             } else{
 
-                // let token = uuidv4();
-                // //send email
+                let token = uuidv4();
+                //send email
                 await emailService.sendSimpleEmail({
                     receiverEmail: data.email,
                     patientName: data.fullName,
                     time: data.timeString,
                     doctorName: data.doctorName,
-                    redirectLink: 'https://www.facebook.com/Tien702'
+                    redirectLink: buildUrlEmail(data.doctorId, token)
                 });
 
                 //upsert patient
@@ -53,7 +53,7 @@ let postBookAppointment = (data) =>{
                             patientId: user[0].id,
                             date: data.date,
                             timeType: data.timeType,
-                            //token: token
+                            token: token
                         }
                     })
                 }
@@ -62,8 +62,6 @@ let postBookAppointment = (data) =>{
                     errMessage: 'Save info Patient OK!'
                 })
             }
-            
-
         } catch (e) {
             reject(e)
         }
