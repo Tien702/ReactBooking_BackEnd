@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'doctorId', targetKey: 'id', as: 'doctorData'
         })
     }
+    
   };
   Schedule.init({
     currentNumber: DataTypes.INTEGER,

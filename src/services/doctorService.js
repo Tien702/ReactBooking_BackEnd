@@ -61,7 +61,17 @@ let saveDetailInfoDoctors = (inputData) =>{
         try {
             
             //let checkObj = checkRequiredFields(inputData);
-            if(!inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown || !inputData.action){
+            if(!inputData.doctorId 
+                || !inputData.contentHTML 
+                || !inputData.contentMarkdown 
+                || !inputData.action
+                || !inputData.selectedPrice
+                || !inputData.selectedPayment
+                || !inputData.selectedProvince
+                || !inputData.nameClinic
+                || !inputData.addressClinic
+                || !inputData.note
+                ){
                 resolve({
                     errCode: 1,
                     errMessage: `Missing parameters`,
@@ -90,39 +100,39 @@ let saveDetailInfoDoctors = (inputData) =>{
                         await doctorMarkdown.save();
                     }
                 }
-                // //upsert to Doctor_Infor table
-                // let doctorInfo = await db.Doctor_Infor.findOne({
-                //     where: {
-                //         doctorId: inputData.doctorId,
-                //     },
-                //     raw: false
-                // })
-                // if(doctorInfo){
-                //     //update
-                //     doctorInfo.doctorId = inputData.doctorId;
-                //     doctorInfo.priceId = inputData.selectedPrice;
-                //     doctorInfo.provinceId = inputData.selectedProvince;
-                //     doctorInfo.paymentId = inputData.selectedPayment;
-                //     doctorInfo.nameClinic = inputData.nameClinic;
-                //     doctorInfo.addressClinic = inputData.addressClinic;
-                //     doctorInfo.note = inputData.note;
-                //     doctorInfo.specialtyId = inputData.specialtyId;
-                //     doctorInfo.clinicId = inputData.clinicId;
-                //     await doctorInfo.save()
-                // }else{
-                //     //create
-                //     await db.Doctor_Infor.create({
-                //         doctorId : inputData.doctorId,
-                //         priceId : inputData.selectedPrice,
-                //         provinceId : inputData.selectedProvince,
-                //         paymentId : inputData.selectedPayment,
-                //         nameClinic : inputData.nameClinic,
-                //         addressClinic : inputData.addressClinic,
-                //         note : inputData.note,
-                //         specialtyId : inputData.specialtyId,
-                //         clinicId : inputData.clinicId,
-                //     })
-                // }
+                //upsert to Doctor_Infor table
+                let doctorInfo = await db.Doctor_Infor.findOne({
+                    where: {
+                        doctorId: inputData.doctorId,
+                    },
+                    raw: false
+                })
+                if(doctorInfo){
+                    //update
+                    doctorInfo.doctorId = inputData.doctorId;
+                    doctorInfo.priceId = inputData.selectedPrice;
+                    doctorInfo.provinceId = inputData.selectedProvince;
+                    doctorInfo.paymentId = inputData.selectedPayment;
+                    doctorInfo.nameClinic = inputData.nameClinic;
+                    doctorInfo.addressClinic = inputData.addressClinic;
+                    doctorInfo.note = inputData.note;
+                    // doctorInfo.specialtyId = inputData.specialtyId;
+                    // doctorInfo.clinicId = inputData.clinicId;
+                    await doctorInfo.save()
+                }else{
+                    //create
+                    await db.Doctor_Infor.create({
+                        doctorId : inputData.doctorId,
+                        priceId : inputData.selectedPrice,
+                        provinceId : inputData.selectedProvince,
+                        paymentId : inputData.selectedPayment,
+                        nameClinic : inputData.nameClinic,
+                        addressClinic : inputData.addressClinic,
+                        note : inputData.note,
+                        // specialtyId : inputData.specialtyId,
+                        // clinicId : inputData.clinicId,
+                    })
+                }
                 
                 resolve({
                     errCode: 0,
@@ -283,7 +293,7 @@ let getExtraInfoDoctorById = (idInput) =>{
                 })
             } else{
                 
-                let data = await db.Doctor_Inforr.findOne({
+                let data = await db.Doctor_Infor.findOne({
                     where: {
                         doctorId: idInput
                     },
@@ -331,7 +341,8 @@ let getProfileDoctorById = (inputId) =>{
                         exclude: ['password']
                     },
                     include:[
-                        { model: db.Markdown, 
+                        { 
+                            model: db.Markdown, 
                             attributes:['description', 'contentHTML','contentMarkdown']
                         },
 
