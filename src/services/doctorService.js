@@ -60,21 +60,11 @@ let saveDetailInfoDoctors = (inputData) =>{
     return new Promise ( async(resolve, reject) =>{
         try {
             
-            //let checkObj = checkRequiredFields(inputData);
-            if(!inputData.doctorId 
-                || !inputData.contentHTML 
-                || !inputData.contentMarkdown 
-                || !inputData.action
-                || !inputData.selectedPrice
-                || !inputData.selectedPayment
-                || !inputData.selectedProvince
-                || !inputData.nameClinic
-                || !inputData.addressClinic
-                || !inputData.note
-                ){
+            let checkObj = checkRequiredFields(inputData);
+            if(checkObj.isValid === false){
                 resolve({
                     errCode: 1,
-                    errMessage: `Missing parameters`,
+                    errMessage: `Missing parameters: ${checkObj.element}`,
                 })
             }else
             {
@@ -116,8 +106,8 @@ let saveDetailInfoDoctors = (inputData) =>{
                     doctorInfo.nameClinic = inputData.nameClinic;
                     doctorInfo.addressClinic = inputData.addressClinic;
                     doctorInfo.note = inputData.note;
-                    // doctorInfo.specialtyId = inputData.specialtyId;
-                    // doctorInfo.clinicId = inputData.clinicId;
+                    doctorInfo.specialtyId = inputData.specialtyId;
+                    doctorInfo.clinicId = inputData.clinicId;
                     await doctorInfo.save()
                 }else{
                     //create
@@ -129,8 +119,8 @@ let saveDetailInfoDoctors = (inputData) =>{
                         nameClinic : inputData.nameClinic,
                         addressClinic : inputData.addressClinic,
                         note : inputData.note,
-                        // specialtyId : inputData.specialtyId,
-                        // clinicId : inputData.clinicId,
+                        specialtyId : inputData.specialtyId,
+                        clinicId : inputData.clinicId,
                     })
                 }
                 
