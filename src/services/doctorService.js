@@ -1,7 +1,7 @@
 import db from "../models/index";
 require('dotenv').config();
 import _, { values } from 'lodash';
-//import emailService from './emailService';
+import emailService from './emailService';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -392,7 +392,7 @@ let checkRequiredFields = (inputData) =>{
 }
 
 let getListPatientForDoctor = (doctorId, date) =>{
-    return new Promise (async (resolve, reject)=>{
+    return new Promise (async(resolve, reject)=>{
         try {
             if(!doctorId || !date){
                 resolve({
@@ -438,7 +438,8 @@ let getListPatientForDoctor = (doctorId, date) =>{
 let sendRemedy = (data) =>{
     return new Promise( async (resolve, reject) =>{
         try {
-            if(!data.email || !data.doctorId || !data.patientId ||!data.timeType){
+            if(!data.email || !data.doctorId || !data.patientId 
+                ||!data.timeType || !data.imgBase64){
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameters'
@@ -467,7 +468,7 @@ let sendRemedy = (data) =>{
                
             }
         } catch (e) {
-            
+            reject(e);
         }
     })
 }
