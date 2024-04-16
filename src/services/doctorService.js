@@ -1,7 +1,7 @@
 import db from "../models/index";
 require('dotenv').config();
 import _, { values } from 'lodash';
-//import emailService from './emailService';
+import emailService from './emailService';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -210,10 +210,6 @@ let bulkCreateSchedule = (data) =>{
                     attributes: ['timeType', 'date','doctorId','maxNumber'],
                     raw: true
                 });
-
-                    console.log('check create: ', schedule)
-                    console.log('check existing: ', existing)
-
                 let toCreate = _.differenceWith(schedule, existing, (a, b) =>{
                     return a.timeType === b.timeType && +a.date === +b.date;
                 });
