@@ -370,7 +370,7 @@ let getProfileDoctorById = (inputId) =>{
 let checkRequiredFields = (inputData) =>{
     let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action',
                             'selectedPrice', 'selectedPayment', 'selectedProvince', 'nameClinic',
-                            'addressClinic', 'note', 'specialtyId'
+                            'addressClinic', 'specialtyId'
                     ]
     let isValid = true;
     let element = '';

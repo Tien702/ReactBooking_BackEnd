@@ -220,7 +220,6 @@ let getAllCodeService = (typeInput) =>{
                 res.errCode = 0;
                 res.data = allcode;
                 resolve(res);
-
             }
             
         } catch (e) {
